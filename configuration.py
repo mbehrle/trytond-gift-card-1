@@ -13,7 +13,6 @@ class Configuration(ModelSingleton, ModelSQL, ModelView):
     liability_account = fields.Property(
         fields.Many2One(
             'account.account', 'Liability Account', required=True,
-            domain=[('kind', '=', 'revenue')]
         )
     )
 
