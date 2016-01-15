@@ -600,3 +600,7 @@ msgstr "Abbrechen"
 msgctxt "wizard_button:gift_card.redeem.wizard,start,redeem:"
 msgid "Redeem"
 msgstr "Rücknahme"
+
+msgctxt "nereid:sale.py:333"
+msgid "Paid by Gift Certificate"
+msgstr "Zahlung per Gutschein"
