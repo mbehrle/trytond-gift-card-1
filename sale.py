@@ -4,6 +4,10 @@ from trytond.pool import PoolMeta, Pool
 from trytond.pyson import Eval, Bool
 from trytond.wizard import Wizard
 
+from nereid.contrib.locale import make_lazy_gettext
+
+_ = make_lazy_gettext('gift_card')
+
 __all__ = [
     'SaleLine', 'Sale', 'AddSalePaymentView', 'Payment', 'AddSalePayment'
 ]
@@ -326,8 +330,8 @@ class Payment:
         """
         if self.method == 'gift_card':
             return (
-                "Paid by Gift Certificate " + "(" + ("x" * 5) +
-                self.gift_card.number[-3:] + ")"
+                _('Paid by Gift Certificate') + ' (' + ('x' * 5) +
+                self.gift_card.number[-3:] + ')'
             )
         return super(Payment, self).get_payment_description(name)
 
