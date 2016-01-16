@@ -330,7 +330,7 @@ class Payment:
         """
         if self.method == 'gift_card':
             return (
-                _('Paid by Gift Certificate') + ' (' + ('x' * 5) +
+                unicode(_('Paid by Gift Certificate')) + ' (' + ('x' * 5) +
                 self.gift_card.number[-3:] + ')'
             )
         return super(Payment, self).get_payment_description(name)
