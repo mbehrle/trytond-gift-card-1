@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from num2words import num2words
 
-from trytond.model import ModelSQL, ModelView, Workflow, fields
+from trytond.model import ModelSQL, ModelView, Workflow, fields, Unique
 from trytond.pyson import Eval, If
 from trytond.wizard import Wizard, Button, StateView, StateTransition
 from trytond.pool import Pool
@@ -157,8 +157,9 @@ class GiftCard(Workflow, ModelSQL, ModelView):
     @classmethod
     def __setup__(cls):
         super(GiftCard, cls).__setup__()
+        table = cls.__table__()
         cls._sql_constraints = [
-            ('number_uniq', 'UNIQUE(number)',
+            ('number_uniq', Unique(table, table.number),
              'The number of the gift card must be unique.')
         ]
         cls._error_messages.update({
@@ -337,17 +338,16 @@ class GiftCardReport(Report):
     __name__ = 'gift_card.gift_card'
 
     @classmethod
-    def parse(cls, report, records, data, localcontext):
+    def get_context(cls, records, data):
         """
         Update localcontext to add num2words
         """
-        localcontext.update({
-            'num2words': lambda *args, **kargs: num2words(
-                *args, **kargs)
-        })
-        return super(GiftCardReport, cls).parse(
-            report, records, data, localcontext
+        context = super(GiftCardReport, cls).get_context(records, data)
+
+        context['num2words'] = lambda *args, **kargs: num2words(
+            *args, **kargs
         )
+        return context
 
 
 class GiftCardRedeemStart(ModelView):

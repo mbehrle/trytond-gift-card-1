@@ -4,7 +4,7 @@
           <label name="is_gift_card" />
           <field name="is_gift_card" />
           <newline />
-          <group id="gift_card_info" string="Gift Cards Information" states="{'invisible': ~Bool(Eval('is_gift_card'))}" colspan="4">
+          <group id="gift_card_info" string="Gift Cards Information" colspan="4">
               <label name="gift_card_delivery_mode" />
               <field name="gift_card_delivery_mode" />
               <label name="allow_open_amount" />

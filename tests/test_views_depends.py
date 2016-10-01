@@ -2,32 +2,15 @@
 import unittest
 
 import trytond.tests.test_tryton
-from trytond.tests.test_tryton import test_view, test_depends
+from trytond.tests.test_tryton import ModuleTestCase
 
 
-class TestViewsDepends(unittest.TestCase):
+class TestViewsDepends(ModuleTestCase):
     '''
     Test views and depends
     '''
 
-    def setUp(self):
-        """
-        Set up data used in the tests.
-        this method is called before each test function execution.
-        """
-        trytond.tests.test_tryton.install_module('gift_card')
-
-    def test0005views(self):
-        '''
-        Test views.
-        '''
-        test_view('gift_card')
-
-    def test0006depends(self):
-        '''
-        Test depends.
-        '''
-        test_depends()
+    module = 'gift_card'
 
 
 def suite():

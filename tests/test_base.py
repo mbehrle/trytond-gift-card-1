@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
-import unittest
 from datetime import date, datetime
 from decimal import Decimal
 from dateutil.relativedelta import relativedelta
 
-from trytond.tests.test_tryton import POOL, USER
+from trytond.tests.test_tryton import POOL, USER, ModuleTestCase
 import trytond.tests.test_tryton
 from trytond.transaction import Transaction
 
 
-class TestBase(unittest.TestCase):
+class TestBase(ModuleTestCase):
     """
     Base Test Case for gift card
     """
+    module = 'gift_card'
 
     def setUp(self):
         """
@@ -84,9 +84,10 @@ class TestBase(unittest.TestCase):
             'account.create_chart', type="wizard"
         )
 
-        account_template, = AccountTemplate.search(
-            [('parent', '=', None)]
-        )
+        account_template, = AccountTemplate.search([
+            ('parent', '=', None),
+            ('name', '=', 'Minimal Account Chart'),
+        ])
 
         session_id, _, _ = account_create_chart.create()
         create_chart = account_create_chart(session_id)

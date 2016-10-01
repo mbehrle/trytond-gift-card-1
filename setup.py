@@ -81,8 +81,7 @@ requires = [
 
 MODULE2PREFIX = {
     'sale_payment_gateway': 'fio',
-    'email_queue': 'openlabs',
-    'product_notebook': 'openlabs',
+    'email_queue': 'fio',
 }
 
 MODULE = "gift_card"

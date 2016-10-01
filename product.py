@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from trytond.model import fields, ModelSQL, ModelView
 from trytond.pool import PoolMeta
+from trytond.pyson import Eval, Bool
 
 __all__ = ['Product', 'GiftCardPrice']
 __metaclass__ = PoolMeta
@@ -26,6 +27,13 @@ class Product:
     gift_card_prices = fields.One2Many(
         'product.product.gift_card.price', 'product', 'Gift Card Prices',
     )
+
+    @classmethod
+    def view_attributes(cls):
+        return super(Product, cls).view_attributes() + [
+            ('//group[@id="gift_card_info"]', 'states', {
+                'invisible': ~Bool(Eval('is_gift_card'))
+            })]
 
     @staticmethod
     def default_gift_card_delivery_mode():
