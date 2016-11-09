@@ -429,47 +429,47 @@ msgctxt "nereid:sale.py:333"
 msgid "Paid by Gift Certificate"
 msgstr "Zahlung per Gutschein"
 
-msgctxt "odt:gift_card.gift_card:"
+msgctxt "report:gift_card.gift_card:"
 msgid "A GIFT FOR"
 msgstr "GUTSCHEIN FÜR"
 
-msgctxt "odt:gift_card.gift_card:"
+msgctxt "report:gift_card.gift_card:"
 msgid "Authorized Signature"
 msgstr "Autorisierte Unterschrift"
 
-msgctxt "odt:gift_card.gift_card:"
+msgctxt "report:gift_card.gift_card:"
 msgid "Date:"
 msgstr "Datum:"
 
-msgctxt "odt:gift_card.gift_card:"
+msgctxt "report:gift_card.gift_card:"
 msgid "FROM"
 msgstr "VON"
 
-msgctxt "odt:gift_card.gift_card:"
+msgctxt "report:gift_card.gift_card:"
 msgid "Gift Certificate"
 msgstr "Geschenkgutschein"
 
-msgctxt "odt:gift_card.gift_card:"
+msgctxt "report:gift_card.gift_card:"
 msgid "No."
 msgstr "Nr."
 
-msgctxt "odt:gift_card.gift_card:"
+msgctxt "report:gift_card.gift_card:"
 msgid "ONLY."
 msgstr " "
 
-msgctxt "odt:gift_card.gift_card:"
+msgctxt "report:gift_card.gift_card:"
 msgid "VALUE"
 msgstr "WERT"
 
-msgctxt "odt:gift_card.gift_card:"
+msgctxt "report:gift_card.gift_card:"
 msgid "_________________________________"
 msgstr "_________________________________"
 
-msgctxt "odt:gift_card.gift_card:"
+msgctxt "report:gift_card.gift_card:"
 msgid "_____________________________________________________"
 msgstr "_____________________________________________________"
 
-msgctxt "odt:gift_card.gift_card:"
+msgctxt "report:gift_card.gift_card:"
 msgid "______________________________________________________"
 msgstr "______________________________________________________"
 
