@@ -80,12 +80,12 @@ requires = [
 ]
 
 MODULE2PREFIX = {
-    'sale_payment_gateway': 'fio',
-    'email_queue': 'fio',
+    'sale_payment_gateway': 'm9s',
+    'email_queue': 'm9s',
 }
 
 MODULE = "gift_card"
-PREFIX = "fio"
+PREFIX = "m9s"
 for dep in info.get('depends', []):
     if not re.match(r'(ir|res|webdav)(\W|$)', dep):
         requires.append(
