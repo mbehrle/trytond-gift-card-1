@@ -417,17 +417,41 @@ msgctxt "model:res.group,name:gift_card_email_receivers"
 msgid "Gift Card E-mail Receivers"
 msgstr "Gutschein E-Mail Empfänger"
 
-msgctxt "nereid:forms.py:55"
-msgid "Set my Own"
-msgstr "Eigenen Betrag einsetzen"
-
-msgctxt "nereid:forms.py:69"
-msgid "Amount between {gc_min} and {gc_max} is allowed."
-msgstr "Betrag zwischen {gc_min} und {gc_max} möglich."
-
-msgctxt "nereid:sale.py:333"
+msgctxt "nereid:sale.py:340"
 msgid "Paid by Gift Certificate"
-msgstr "Zahlung per Gutschein"
+msgstr "Bezahlt per Geschenkgutschein"
+
+msgctxt "report:gift_card.gift_card:"
+msgid "</for>"
+msgstr "</for>"
+
+msgctxt "report:gift_card.gift_card:"
+msgid "<card.number>"
+msgstr "<card.number>"
+
+msgctxt "report:gift_card.gift_card:"
+msgid ""
+"<card.recipient_name>______________________________________________________"
+msgstr ""
+"<card.recipient_name>______________________________________________________"
+
+msgctxt "report:gift_card.gift_card:"
+msgid ""
+"<card.sale and (card.sale.invoice_address.name or card.sale.party.name)>"
+msgstr ""
+"<card.sale and (card.sale.invoice_address.name or card.sale.party.name)>"
+
+msgctxt "report:gift_card.gift_card:"
+msgid "<for each=\"card in records\">"
+msgstr "<for each=\"card in records\">"
+
+msgctxt "report:gift_card.gift_card:"
+msgid "<format_date(card.amount, user.language, currency=card.currency)>"
+msgstr "<format_date(card.amount, user.language, currency=card.currency)>"
+
+msgctxt "report:gift_card.gift_card:"
+msgid "<num2words(card.amount).upper()> ONLY."
+msgstr "<num2words(card.amount).upper()>."
 
 msgctxt "report:gift_card.gift_card:"
 msgid "A GIFT FOR"
@@ -438,8 +462,8 @@ msgid "Authorized Signature"
 msgstr "Autorisierte Unterschrift"
 
 msgctxt "report:gift_card.gift_card:"
-msgid "Date:"
-msgstr "Datum:"
+msgid "Date: <format_date(datetime.date.today(), user.language, date=True)>"
+msgstr "Datum: <format_date(datetime.date.today(), user.language, date=True)>"
 
 msgctxt "report:gift_card.gift_card:"
 msgid "FROM"
@@ -454,10 +478,6 @@ msgid "No."
 msgstr "Nr."
 
 msgctxt "report:gift_card.gift_card:"
-msgid "ONLY."
-msgstr " "
-
-msgctxt "report:gift_card.gift_card:"
 msgid "VALUE"
 msgstr "WERT"
 
@@ -468,10 +488,6 @@ msgstr "_________________________________"
 msgctxt "report:gift_card.gift_card:"
 msgid "_____________________________________________________"
 msgstr "_____________________________________________________"
-
-msgctxt "report:gift_card.gift_card:"
-msgid "______________________________________________________"
-msgstr "______________________________________________________"
 
 msgctxt "selection:gift_card.gift_card,state:"
 msgid "Active"
