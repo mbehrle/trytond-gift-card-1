@@ -418,6 +418,19 @@ class GiftCardRedeemStart(ModelView):
             return None
         return address.id
 
+    @fields.depends('gift_card', 'amount')
+    def on_change_gift_card(self):
+        self.set_available_amount(self.gift_card, self.amount)
+
+    @fields.depends('gift_card', 'amount')
+    def on_change_amount(self):
+        self.set_available_amount(self.gift_card, self.amount)
+
+    def set_available_amount(self, gift_card, amount):
+        if gift_card:
+            if amount > gift_card.amount_available:
+                self.amount = gift_card.amount_available
+
 
 class GiftCardRedeemDone(ModelView):
     "Gift Card Redeem Done View"
@@ -484,16 +497,17 @@ class GiftCardRedeemWizard(Wizard):
 
         res = {
             'gift_card': gift_card.id,
+            'amount': gift_card.amount_available,
         }
         try:
             gateway, = Gateway.search([
                 ('method', '=', 'gift_card'),
                 ('active', '=', True),
             ])
+            res.update({'gateway': gateway.id})
         except ValueError:
-            return res
+            pass
 
-        res.update({'gateway': gateway.id})
         return res
 
     def transition_redeem(self):
