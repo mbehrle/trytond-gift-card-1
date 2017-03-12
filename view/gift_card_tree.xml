@@ -3,5 +3,6 @@
     <field name="number"/>
     <field name="currency"/>
     <field name="amount"/>
+    <field name="amount_available"/>
     <field name="state"/>
 </tree>
