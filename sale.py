@@ -278,6 +278,17 @@ class Sale:
                 continue        # pragma: no cover
             sale.create_gift_cards()
 
+    def settle_manual_payments(self):
+        super(Sale, self).settle_manual_payments()
+        for payment in self.payments:
+            if payment.amount_available and payment.method == "gift_card" and \
+                    not payment.payment_transactions:
+                payment_transaction = payment._create_payment_transaction(
+                    payment.amount_available, payment.description)
+                payment_transaction.save()
+                payment.capture()
+                self.payment_processing_state = None
+
 
 class Payment:
     'Payment'
