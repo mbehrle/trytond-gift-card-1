@@ -12,15 +12,15 @@ msgstr "Die Nummer für einen Gutschein kann nur einmal vergeben werden"
 
 msgctxt "error:gift_card.redeem.wizard:"
 msgid "The gift card to be redeemed must be in active state."
-msgstr "Der Gutschein für die Rücknahme muss in Status \"Aktiv\" sein."
+msgstr "Der Gutschein für die Einlösung muss in Status \"Aktiv\" sein."
 
 msgctxt "error:gift_card.redeem.wizard:"
 msgid "This gift card has already been redeemed."
-msgstr "Dieser Gutschein wurde bereits zurückgenommen."
+msgstr "Dieser Gutschein wurde bereits eingelöst."
 
 msgctxt "error:gift_card.redeem.wizard:"
 msgid "You can only redeem a single gift card at a time."
-msgstr "Es kann nur jeweils ein Gutschein zurückgenommen werden."
+msgstr "Es kann nur jeweils ein Gutschein eingelöst werden."
 
 msgctxt "error:payment_gateway.transaction:"
 msgid "Card %s is found to have insufficient amount"
@@ -181,7 +181,7 @@ msgstr "Letzte Änderung durch"
 
 msgctxt "field:gift_card.redeem.end,done_msg:"
 msgid "Redemption Complete"
-msgstr "Gutscheinrücknahme erledigt"
+msgstr "Gutscheineinlösung erledigt"
 
 msgctxt "field:gift_card.redeem.end,id:"
 msgid "ID"
@@ -345,11 +345,11 @@ msgstr "Gutschein"
 
 msgctxt "model:gift_card.redeem.end,name:"
 msgid "Gift Card Redeem Done View"
-msgstr "Gutschein Rücknahme Erledigt"
+msgstr "Gutschein Einlösung Erledigt"
 
 msgctxt "model:gift_card.redeem.start,name:"
 msgid "Gift Card Redeem Start View"
-msgstr "Gutschein Rücknahme Start"
+msgstr "Gutschein Einlösung Start"
 
 msgctxt "model:ir.action,name:act_configuration"
 msgid "Configuration"
@@ -369,7 +369,7 @@ msgstr "Verkäufe"
 
 msgctxt "model:ir.action,name:gift_card_redeem_wizard"
 msgid "Redeem Gift Card"
-msgstr "Gutscheinrücknahme"
+msgstr "Gutscheineinlösung"
 
 msgctxt "model:ir.action,name:report_gift_card"
 msgid "Gift Card"
@@ -419,7 +419,7 @@ msgstr "Gutschein E-Mail Empfänger"
 
 msgctxt "nereid:sale.py:340"
 msgid "Paid by Gift Certificate"
-msgstr "Bezahlt per Geschenkgutschein"
+msgstr "Bezahlt per Gutschein"
 
 msgctxt "report:gift_card.gift_card:"
 msgid "</for>"
@@ -471,7 +471,7 @@ msgstr "VON"
 
 msgctxt "report:gift_card.gift_card:"
 msgid "Gift Certificate"
-msgstr "Geschenkgutschein"
+msgstr "Gutschein"
 
 msgctxt "report:gift_card.gift_card:"
 msgid "No."
@@ -583,11 +583,11 @@ msgstr "Empfängerdetails"
 
 msgctxt "view:gift_card.redeem.end:"
 msgid "Redemption Complete"
-msgstr "Gutscheinrücknahme erledigt"
+msgstr "Gutscheineinlösung erledigt"
 
 msgctxt "view:gift_card.redeem.start:"
 msgid "Redeem Gift Card"
-msgstr "Gutscheinrücknahme"
+msgstr "Gutscheineinlösung"
 
 msgctxt "view:product.product.gift_card.price:"
 msgid "Gift Card Prices"
@@ -619,4 +619,4 @@ msgstr "Abbrechen"
 
 msgctxt "wizard_button:gift_card.redeem.wizard,start,redeem:"
 msgid "Redeem"
-msgstr "Rücknahme"
+msgstr "Einlösen"
