@@ -380,6 +380,17 @@ class AddSalePaymentView:
                 (Eval('method') == 'gift_card')
             )
 
+    @fields.depends('sale', 'gift_card', 'amount')
+    def on_change_gift_card(self):
+        amount_to_pay = self.sale.total_amount - self.sale.payment_total
+        if self.gift_card:
+            if amount_to_pay > self.gift_card.amount_available:
+                self.amount = self.gift_card.amount_available
+            else:
+                self.amount = amount_to_pay
+        else:
+            self.amount = amount_to_pay
+
 
 class AddSalePayment(Wizard):
     """
