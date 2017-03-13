@@ -347,6 +347,7 @@ class GiftCardReport(Report):
         context['num2words'] = lambda *args, **kargs: num2words(
             *args, **kargs
         )
+        context['company'] = context['user'].company
         return context
 
 
