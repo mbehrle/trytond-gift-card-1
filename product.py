@@ -52,8 +52,8 @@ class Product:
         super(Product, cls).__setup__()
 
         cls._error_messages.update({
-            'inappropriate_product':
-                'Product %s is not appropriate under %s delivery mode',
+            'inappropriate_product_type':
+                'The product type of %s must be service for gift cards.',
             'invalid_amount':
                 'Gift Card minimum amount must be smaller than gift card '
                 'maximum amount',
@@ -69,8 +69,7 @@ class Product:
         super(Product, cls).validate(templates)
 
         for template in templates:
-            template.check_type_and_mode()
-
+            template.check_product_type()
             template.check_gc_min_max()
 
     def check_gc_min_max(self):
@@ -86,27 +85,17 @@ class Product:
         if self.gc_min > self.gc_max:
             self.raise_user_error("invalid_amount")
 
-    def check_type_and_mode(self):
-        """
-        Type must be service only if delivery mode is virtual
-
-        Type must be goods only if delivery mode is combined or physical
-        """
+    def check_product_type(self):
+        '''
+        Product type of gift cards must be service.
+        '''
         if not self.is_gift_card:
             return
 
-        if (
-            self.gift_card_delivery_mode == 'virtual' and
-            self.type != 'service'
-        ) or (
-            self.gift_card_delivery_mode in ['physical', 'combined'] and
-            self.type != 'goods'
-        ):
+        if self.type != 'service':
             self.raise_user_error(
-                "inappropriate_product", (
-                    self.rec_name, self.gift_card_delivery_mode
+                "inappropriate_product_type", (self.rec_name,)
                 )
-            )
 
 
 class GiftCardPrice(ModelSQL, ModelView):
