@@ -7,10 +7,13 @@ from trytond.wizard import Wizard, Button, StateView, StateTransition
 from trytond.pool import Pool
 from trytond.transaction import Transaction
 from trytond.report import Report
+from trytond.config import config
 from jinja2 import Environment, PackageLoader
 from nereid import render_email
-from trytond.config import config
 
+from nereid.contrib.locale import make_lazy_gettext
+
+_ = make_lazy_gettext('gift_card')
 
 __all__ = [
     'GiftCard', 'GiftCardReport', 'GiftCardRedeemStart', 'GiftCardRedeemDone',
@@ -538,13 +541,13 @@ class GiftCardRedeemWizard(Wizard):
         """
         Returns a message with relevant details.
         """
-        currency = self.start.gift_card.currency.code
+        currency_code = self.start.gift_card.currency.code
         return {
-            'done_msg': 'The gift card was redeemed with {0} {3} captured in'
-            ' this transaction, {1} {3} captured overall and {2} {3} remaining.'
-            .format(
+            'done_msg': _('The gift card was redeemed with {0} {3} captured in '
+                'this transaction, {1} {3} captured overall and {2} {3} '
+                'remaining.').format(
                 self.start.amount, self.start.gift_card.amount_captured,
-                self.start.gift_card.amount_available, currency
+                self.start.gift_card.amount_available, currency_code
             ),
         }
 
