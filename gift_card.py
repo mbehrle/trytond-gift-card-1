@@ -193,16 +193,17 @@ class GiftCard(Workflow, ModelSQL, ModelView):
 
     @classmethod
     def create(cls, vlist):
-        Sequence = Pool().get('ir.sequence')
-        Configuration = Pool().get('gift_card.configuration')
-
         vlist = [x.copy() for x in vlist]
         for values in vlist:
             if not values.get('number'):
-                values['number'] = Sequence.get_id(
-                    Configuration(1).number_sequence.id
-                )
+                values['number'] = cls.get_gift_card_number()
         return super(GiftCard, cls).create(vlist)
+
+    @classmethod
+    def get_gift_card_number(cls):
+        Sequence = Pool().get('ir.sequence')
+        Configuration = Pool().get('gift_card.configuration')
+        return Sequence.get_id(Configuration(1).number_sequence.id)
 
     @classmethod
     def copy(cls, gift_cards, default=None):
