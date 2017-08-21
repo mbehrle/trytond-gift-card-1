@@ -35,16 +35,20 @@ msgid "Price can not be negative"
 msgstr "Preis kann nicht negativ sein"
 
 msgctxt "error:product.product:"
-msgid "The product type of %s must be service for gift cards."
-msgstr "Der Artikeltyp für %s muss Dienstleistung sein für Gutscheine."
-
-msgctxt "error:product.product:"
 msgid "Gift Card minimum amount must be smaller than gift card maximum amount"
 msgstr "Minimalbetrag muss geringer als Maximalbetrag sein"
 
 msgctxt "error:product.product:"
 msgid "Gift card amounts can not be negative"
 msgstr "Gutscheinbeträge können nicht negativ sein"
+
+msgctxt "error:product.product:"
+msgid "Product %s is not appropriate under %s delivery mode"
+msgstr "Variante %s nicht passend für Auslieferungsmodus %s."
+
+msgctxt "error:product.product:"
+msgid "The product type of %s must be service for gift cards."
+msgstr "Der Artikeltyp für %s muss Dienstleistung sein für Gutscheine."
 
 msgctxt "error:sale.line:"
 msgid "Gift card amount must be within %s %s and %s %s"
@@ -425,6 +429,14 @@ msgstr ""
 "Der Gutschein wurde belastet mit {0} {3} in der aktuellen Transaktion, mit "
 "insgesamt {1} {3} eingelöstem Betrag und {2} {3} verbleibendem Guthaben."
 
+msgctxt "nereid:gift_card.py:547"
+msgid ""
+"The gift card was redeemed with {0} {3} captured in this transaction, {1} "
+"{3} captured overall and {2} {3} remaining."
+msgstr ""
+"Der Gutschein wurde belastet mit {0} {3} in der aktuellen Transaktion, mit "
+"insgesamt {1} {3} eingelöstem Betrag und {2} {3} verbleibendem Guthaben."
+
 msgctxt "nereid:sale.py:351"
 msgid "Paid by Gift Certificate"
 msgstr "Bezahlt per Gutschein"
@@ -596,6 +608,10 @@ msgstr "Gutscheineinlösung erledigt"
 msgctxt "view:gift_card.redeem.start:"
 msgid "Redeem Gift Card"
 msgstr "Gutscheineinlösung"
+
+msgctxt "view:product.product.gift_card.price:"
+msgid "Gift Card Price"
+msgstr "Gutscheinpreis"
 
 msgctxt "view:product.product.gift_card.price:"
 msgid "Gift Card Prices"
