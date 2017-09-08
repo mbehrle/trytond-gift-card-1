@@ -31,7 +31,7 @@ class Product:
     @classmethod
     def view_attributes(cls):
         return super(Product, cls).view_attributes() + [
-            ('//group[@id="gift_card_info"]', 'states', {
+            ('//page[@id="gift_card_details"]', 'states', {
                 'invisible': ~Bool(Eval('is_gift_card'))
             })]
 

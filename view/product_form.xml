@@ -1,9 +1,10 @@
 <data>
-    <xpath expr="/form/notebook" position="inside">
-        <page id="gift_card_details" string="Gift Card">
+    <xpath expr="/form/field[@name='active']" position="after">
           <label name="is_gift_card" />
           <field name="is_gift_card" />
-          <newline />
+    </xpath>
+    <xpath expr="/form/notebook" position="inside">
+        <page id="gift_card_details" string="Gift Card">
           <group id="gift_card_info" string="Gift Cards Information" colspan="4">
               <label name="gift_card_delivery_mode" />
               <field name="gift_card_delivery_mode" />
