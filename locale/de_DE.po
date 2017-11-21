@@ -439,7 +439,7 @@ msgstr ""
 
 msgctxt "nereid:sale.py:351"
 msgid "Paid by Gift Certificate"
-msgstr "Bezahlt per Gutschein"
+msgstr "Zahlung per Gutschein"
 
 msgctxt "report:gift_card.gift_card:"
 msgid "</for>"
