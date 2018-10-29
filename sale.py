@@ -21,7 +21,7 @@ class SaleLine:
             ('combined', 'Combined'),
         ], 'Gift Card Delivery Mode', states={
             'invisible': ~Bool(Eval('is_gift_card')),
-        }, depends=['is_gift_card']), 'on_change_with_gift_card_delivery_mode'
+        }, depends=['is_gift_card']), 'get_gift_card_delivery_mode'
     )
 
     is_gift_card = fields.Function(
@@ -119,15 +119,27 @@ class SaleLine:
                 'Gift card amount must be within %s %s and %s %s'
         })
 
+    @classmethod
+    def get_gift_card_delivery_mode(cls, lines, name):
+        res = {}
+        for line in lines:
+            if not (line.product and line.is_gift_card):
+                mode = None
+            else:
+                mode = line.product.gift_card_delivery_mode
+            res[line.id] = mode
+        return res
+
     @fields.depends('product', 'is_gift_card')
     def on_change_with_gift_card_delivery_mode(self, name=None):
         """
         Returns delivery mode of the gift card product
         """
-        if not (self.product and self.is_gift_card):
-            return None
+        SaleLine = Pool().get('sale.line')
 
-        return self.product.gift_card_delivery_mode
+        return SaleLine.get_gift_card_delivery_mode(
+            [self], name='gift_card_delivery_mode'
+        )[self.id]
 
     @classmethod
     def copy(cls, lines, default=None):
