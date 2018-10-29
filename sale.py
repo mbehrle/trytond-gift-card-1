@@ -56,7 +56,7 @@ class SaleLine:
     allow_open_amount = fields.Function(
         fields.Boolean("Allow Open Amount?", states={
             'invisible': ~Bool(Eval('is_gift_card'))
-        }, depends=['is_gift_card']), 'on_change_with_allow_open_amount'
+        }, depends=['is_gift_card']), 'get_allow_open_amount'
     )
 
     gc_price = fields.Many2One(
@@ -86,8 +86,20 @@ class SaleLine:
 
     @fields.depends('product')
     def on_change_with_allow_open_amount(self, name=None):
-        if self.product:
-            return self.product.allow_open_amount
+        SaleLine = Pool().get('sale.line')
+
+        return SaleLine.get_allow_open_amount(
+            [self], name='allow_open_amount'
+        )[self.id]
+
+    @classmethod
+    def get_allow_open_amount(cls, lines, name):
+        return {
+            line.id: (
+                line.product.allow_open_amount if line.product else None
+            )
+            for line in lines
+        }
 
     @fields.depends('gc_price', 'unit_price')
     def on_change_gc_price(self):
