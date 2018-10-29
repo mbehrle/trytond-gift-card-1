@@ -26,7 +26,7 @@ class SaleLine:
 
     is_gift_card = fields.Function(
         fields.Boolean('Gift Card'),
-        'on_change_with_is_gift_card'
+        'get_is_gift_card'
     )
     gift_cards = fields.One2Many(
         'gift_card.gift_card', "sale_line", "Gift Cards", readonly=True
@@ -141,7 +141,20 @@ class SaleLine:
         """
         Returns boolean value to tell if product is gift card or not
         """
-        return self.product and self.product.is_gift_card
+        SaleLine = Pool().get('sale.line')
+
+        return SaleLine.get_is_gift_card(
+            [self], name='is_gift_card'
+        )[self.id]
+
+    @classmethod
+    def get_is_gift_card(cls, lines, name):
+        return {
+            line.id: (
+                line.product.is_gift_card if line.product else None
+            )
+            for line in lines
+        }
 
     def get_invoice_line(self):
         """
