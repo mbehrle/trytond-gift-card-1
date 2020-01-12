@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from trytond.pool import Pool
-from gift_card import (
+from .gift_card import (
     GiftCard, GiftCardReport, GiftCardRedeemStart, GiftCardRedeemDone,
     GiftCardRedeemWizard
 )
-from sale import SaleLine, Sale, AddSalePaymentView, Payment, AddSalePayment
-from configuration import Configuration, SaleConfiguration
-from gateway import PaymentGateway, PaymentTransaction
-from product import Product, GiftCardPrice
+from .sale import SaleLine, Sale, AddSalePaymentView, Payment, AddSalePayment
+from .configuration import Configuration, SaleConfiguration
+from .gateway import PaymentGateway, PaymentTransaction
+from .product import Product, GiftCardPrice
 
 
 def register():

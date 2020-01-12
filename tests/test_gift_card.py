@@ -6,7 +6,7 @@ import trytond.tests.test_tryton
 from trytond.tests.test_tryton import POOL, with_transaction
 from trytond.transaction import Transaction
 from decimal import Decimal
-from test_base import TestBase
+from .test_base import TestBase
 from trytond.exceptions import UserError
 from trytond.config import config
 config.set('email', 'from', 'test@ol.in')
@@ -27,7 +27,7 @@ class TestGiftCard(TestBase):
         Currency = POOL.get('currency.currency')
 
         self.usd = Currency(
-            name='US Dollar', symbol=u'$', code='USD',
+            name='US Dollar', symbol='$', code='USD',
         )
         self.usd.save()
 
@@ -48,7 +48,7 @@ class TestGiftCard(TestBase):
         Currency = POOL.get('currency.currency')
 
         self.usd = Currency(
-            name='US Dollar', symbol=u'$', code='USD', digits=3
+            name='US Dollar', symbol='$', code='USD', digits=3
         )
         self.usd.save()
 
@@ -607,7 +607,7 @@ class TestGiftCard(TestBase):
         Currency = POOL.get('currency.currency')
 
         self.usd = Currency(
-            name='US Dollar', symbol=u'$', code='USD',
+            name='US Dollar', symbol='$', code='USD',
         )
         self.usd.save()
 
@@ -647,7 +647,7 @@ class TestGiftCard(TestBase):
         Currency = POOL.get('currency.currency')
 
         self.usd = Currency(
-            name='US Dollar', symbol=u'$', code='USD',
+            name='US Dollar', symbol='$', code='USD',
         )
         self.usd.save()
 
@@ -1058,7 +1058,7 @@ class TestGiftCard(TestBase):
 
             val = GiftCardReport.execute([gift_card.id], {})
 
-            self.assert_(val)
+            self.assertTrue(val)
             # Assert report name
             self.assertEqual(val[3], 'Gift Card')
 
@@ -1339,20 +1339,20 @@ class TestGiftCard(TestBase):
                 type='service', mode='virtual', is_gift_card=True
             )
 
-            self.assert_(service_product)
+            self.assertTrue(service_product)
 
             # In physical mode product can be created with goods type
             # only
             goods_product = self.create_product(
                 type='goods', mode='physical', is_gift_card=True
             )
-            self.assert_(goods_product)
+            self.assertTrue(goods_product)
 
             # In combined mode product can be created with goods type only
             goods_product = self.create_product(
                 type='goods', mode='combined', is_gift_card=True
             )
-            self.assert_(goods_product)
+            self.assertTrue(goods_product)
 
     @with_transaction()
     def test0115_test_gc_min_max(self):
@@ -1571,7 +1571,7 @@ class TestGiftCard(TestBase):
             'price': 90
         }])
 
-        self.assert_(price)
+        self.assertTrue(price)
 
     @with_transaction()
     def test0130_test_on_change_gc_price(self):

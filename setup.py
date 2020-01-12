@@ -4,7 +4,7 @@ import os
 import sys
 import time
 import unittest
-import ConfigParser
+import configparser
 from setuptools import setup, Command
 
 
@@ -30,7 +30,7 @@ class SQLiteTest(Command):
         os.environ['TRYTOND_DATABASE_URI'] = 'sqlite://'
         os.environ['DB_NAME'] = ':memory:'
 
-        from tests import suite
+        from .tests import suite
         test_result = unittest.TextTestRunner(verbosity=3).run(suite())
 
         if test_result.wasSuccessful():
@@ -57,7 +57,7 @@ class PostgresTest(Command):
 
         os.environ['DB_NAME'] = 'test_' + str(int(time.time()))
 
-        from tests import suite
+        from .tests import suite
         test_result = unittest.TextTestRunner(verbosity=3).run(suite())
 
         if test_result.wasSuccessful():
@@ -65,7 +65,7 @@ class PostgresTest(Command):
         sys.exit(-1)
 
 
-config = ConfigParser.ConfigParser()
+config = configparser.ConfigParser()
 config.readfp(open('tryton.cfg'))
 info = dict(config.items('tryton'))
 for key in ('depends', 'extras_depend', 'xml'):

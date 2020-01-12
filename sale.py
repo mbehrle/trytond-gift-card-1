@@ -290,7 +290,7 @@ class Sale:
         '''
         Create the gift cards if not already created
         '''
-        for line in filter(lambda l: l.is_gift_card, self.lines):
+        for line in [l for l in self.lines if l.is_gift_card]:
             line.create_gift_cards()
 
     @classmethod
@@ -385,7 +385,7 @@ class Payment:
         """
         if self.method == 'gift_card':
             return (
-                unicode(_('Paid by Gift Certificate')) + ' (' + ('x' * 5) +
+                str(_('Paid by Gift Certificate')) + ' (' + ('x' * 5) +
                 self.gift_card.number[-3:] + ')'
             )
         return super(Payment, self).get_payment_description(name)

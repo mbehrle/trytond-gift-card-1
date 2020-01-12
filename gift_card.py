@@ -296,10 +296,7 @@ class GiftCard(Workflow, ModelSQL, ModelView):
         group_id = ModelData.get_id(
             "gift_card", "gift_card_email_receivers"
         )
-        bcc_emails = map(
-            lambda user: user.email,
-            filter(lambda user: user.email, Group(group_id).users)
-        )
+        bcc_emails = [user.email for user in [user for user in Group(group_id).users if user.email]]
 
         if not self.recipient_email:  # pragma: no cover
             return
