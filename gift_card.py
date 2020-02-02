@@ -10,16 +10,15 @@ from trytond.report import Report
 from trytond.config import config
 from jinja2 import Environment, PackageLoader
 from nereid import render_email
+from trytond.i18n import gettext
+from trytond.exceptions import UserError
 
+from trytond.sendmail import sendmail_transactional, SMTPDataManager
 from nereid.contrib.locale import make_lazy_gettext
 
 _ = make_lazy_gettext('gift_card')
 
-__all__ = [
-    'GiftCard', 'GiftCardReport', 'GiftCardRedeemStart', 'GiftCardRedeemDone',
-    'GiftCardRedeemWizard',
-]
-
+_from = config.get('email', 'from', default='no-reply@localhost')
 
 class GiftCard(Workflow, ModelSQL, ModelView):
     "Gift Card"
@@ -165,10 +164,6 @@ class GiftCard(Workflow, ModelSQL, ModelView):
             ('number_uniq', Unique(table, table.number),
              'The number of the gift card must be unique.')
         ]
-        cls._error_messages.update({
-            'deletion_not_allowed':
-                "Gift cards can not be deleted in active state"
-        })
         cls._transitions |= set((
             ('draft', 'active'),
             ('active', 'canceled'),
@@ -183,7 +178,7 @@ class GiftCard(Workflow, ModelSQL, ModelView):
                 'invisible': ~Eval('state').in_(['canceled']),
                 'icon': If(
                     Eval('state') == 'cancel', 'tryton-clear',
-                    'tryton-go-previous'
+                    'tryton-back'
                 ),
             },
             'activate': {
@@ -288,7 +283,6 @@ class GiftCard(Workflow, ModelSQL, ModelView):
         """
         Send gift card as an attachment in the email
         """
-        EmailQueue = Pool().get('email.queue')
         GiftCardReport = Pool().get('gift_card.gift_card', type='report')
         ModelData = Pool().get('ir.model.data')
         Group = Pool().get('res.group')
@@ -316,10 +310,9 @@ class GiftCard(Workflow, ModelSQL, ModelView):
         subject = self._get_subject_for_email()
         html_template, text_template = self._get_email_templates()
 
-        sender = config.get('email', 'from')
-
         email_gift_card = render_email(
-            sender, self.recipient_email,
+            _from,
+            [self.recipient_email] + bcc_emails,
             subject,
             html_template=html_template,
             text_template=text_template,
@@ -327,12 +320,22 @@ class GiftCard(Workflow, ModelSQL, ModelView):
             card=self,
         )
 
-        EmailQueue.queue_mail(
-            sender, [self.recipient_email] + bcc_emails,
-            email_gift_card.as_string()
-        )
+        self.send_email(email_gift_card)
         self.is_email_sent = True
         self.save()
+
+    # TODO refactor this into common method, also used by
+    # trytond_nereid/user.py
+    def send_email(self, message):
+        """
+        Generic method to call sendmail_transactional
+        """
+        datamanager = SMTPDataManager()
+        Transaction().join(datamanager)
+
+        if self.email:
+            sendmail_transactional(_from, self.email, message,
+                datamanager=datamanager)
 
 
 class GiftCardReport(Report):
@@ -465,22 +468,6 @@ class GiftCardRedeemWizard(Wizard):
         ]
     )
 
-    @classmethod
-    def __setup__(cls):
-        super(GiftCardRedeemWizard, cls).__setup__()
-        cls._error_messages.update({
-            'gift_card_inactive': (
-                'The gift card to be redeemed must be in active state.'
-            ),
-            'gift_card_redeemed': (
-                'This gift card has already been redeemed.'
-            ),
-            'multiple_giftcards': (
-                'You can only redeem a single gift card at a'
-                ' time.'
-            ),
-        })
-
     def default_start(self, data):
         """
         Initial state of redeem wizard.
@@ -491,7 +478,8 @@ class GiftCardRedeemWizard(Wizard):
         try:
             gift_card_id, = Transaction().context.get('active_ids')
         except ValueError:
-            self.raise_user_error('multiple_giftcards')
+            raise UserError(
+                gettext('gift_card.multiple_giftcards'))
 
         gift_card = GiftCard(gift_card_id)
 
@@ -554,6 +542,6 @@ class GiftCardRedeemWizard(Wizard):
         Checks that the gift card is in active state, else throws error.
         """
         if gift_card.state == 'used':
-            self.raise_user_error('gift_card_redeemed')
+            raise UserError(gettext('gift_card.gift_card_redeemed'))
         elif gift_card.state != 'active':
-            self.raise_user_error('gift_card_inactive')
+            raise UserError(gettext('gift_card.gift_card_inactive'))

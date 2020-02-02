@@ -1,20 +1,66 @@
 # -*- coding: utf-8 -*-
-from trytond.model import fields, ModelView
+from decimal import Decimal
+from trytond import backend
+from trytond.model import (ModelView, ModelSQL, ValueMixin,
+    fields)
 from trytond.pool import PoolMeta, Pool
 from trytond.pyson import Eval, Bool, Get
 from trytond.wizard import Wizard
+from trytond.tools.multivalue import migrate_property
+from trytond.modules.company.model import (
+    CompanyMultiValueMixin, CompanyValueMixin)
+
+from trytond.i18n import gettext
+from trytond.exceptions import UserError
 
 from nereid.contrib.locale import make_lazy_gettext
 
 _ = make_lazy_gettext('gift_card')
 
-__all__ = [
-    'SaleLine', 'Sale', 'AddSalePaymentView', 'Payment', 'AddSalePayment'
-]
-__metaclass__ = PoolMeta
+gift_card_method = fields.Selection([
+                ('order', 'On Order Processed'),
+                ('invoice', 'On Invoice Paid'),
+                ], 'Gift Card Creation Method',
+            required=True)
 
 
-class SaleLine:
+class SaleConfiguration(metaclass=PoolMeta):
+    __name__ = 'sale.configuration'
+
+    gift_card_method = fields.MultiValue(gift_card_method)
+
+
+class _ConfigurationValue(ModelSQL):
+
+    _configuration_value_field = None
+
+    @classmethod
+    def __register__(cls, module_name):
+        TableHandler = backend.get('TableHandler')
+        exist = TableHandler.table_exist(cls._table)
+
+        super(_ConfigurationValue, cls).__register__(module_name)
+
+        if not exist:
+            cls._migrate_property([], [], [])
+
+    @classmethod
+    def _migrate_property(cls, field_names, value_names, fields):
+        field_names.append(cls._configuration_value_field)
+        value_names.append(cls._configuration_value_field)
+        migrate_property(
+            'sale.configuration', field_names, cls, value_names,
+            fields=fields)
+
+
+class SaleGiftCardMethod(_ConfigurationValue, ModelSQL, ValueMixin):
+    'Sale Gift Card Method'
+    __name__ = 'sale.configuration.gift_card_method'
+    gift_card_method = gift_card_method
+    _configuration_value_field = 'gift_card_method'
+
+
+class SaleLine(metaclass=PoolMeta):
     "SaleLine"
     __name__ = 'sale.line'
 
@@ -118,11 +164,6 @@ class SaleLine:
             ~Bool(Eval('allow_open_amount')) & Bool(Eval('is_gift_card'))
         )
 
-        cls._error_messages.update({
-            'amounts_out_of_range':
-                'Gift card amount must be within %s %s and %s %s'
-        })
-
     @classmethod
     def get_gift_card_delivery_mode(cls, lines, name):
         res = {}
@@ -184,10 +225,7 @@ class SaleLine:
             liability_account = GiftCardConfiguration(1).liability_account
 
             if not liability_account:
-                self.raise_user_error(
-                    "Liability Account is missing from Gift Card "
-                    "Configuration"
-                )
+                raise UserError(gettext('gift_card.missing_liability_account'))
 
             for invoice_line in lines:
                 invoice_line.account = liability_account
@@ -221,12 +259,10 @@ class SaleLine:
         if product.allow_open_amount and not (
             product.gc_min <= self.unit_price <= product.gc_max
         ):
-            self.raise_user_error(
-                "amounts_out_of_range", (
+            raise UserError(
+                gettext('gift_card.amounts_out_of_range',
                     self.sale.currency.code, product.gc_min,
-                    self.sale.currency.code, product.gc_max
-                )
-            )
+                    self.sale.currency.code, product.gc_max))
 
         # XXX: Do not consider cancelled ones in the gift cards.
         # card could have been cancelled for reasons like wrong message ?
@@ -263,7 +299,7 @@ class SaleLine:
         return gift_cards
 
 
-class Sale:
+class Sale(metaclass=PoolMeta):
     "Sale"
     __name__ = 'sale.sale'
 
@@ -327,7 +363,7 @@ class Sale:
                 self.payment_processing_state = None
 
 
-class Payment:
+class Payment(metaclass=PoolMeta):
     'Payment'
     __name__ = 'sale.payment'
 
@@ -363,20 +399,10 @@ class Payment:
         Payment should not be created if gift card has insufficient amount
         """
         if self.gift_card and self.gift_card.amount_available < self.amount:
-            self.raise_user_error(
-                'insufficient_amount', (
-                    self.gift_card.number, self.sale.currency.code, self.amount,
-                )
-            )
-
-    @classmethod
-    def __setup__(cls):
-        super(Payment, cls).__setup__()
-
-        cls._error_messages.update({
-            'insufficient_amount':
-                'Gift card %s has no sufficient amount to pay %s %s'
-        })
+            raise UserError(gettext(
+                    'gift_card.insufficient_amount_to_pay',
+                    self.gift_card.number, self.sale.currency.code,
+                    self.amount))
 
     def get_payment_description(self, name):
         """
@@ -391,7 +417,7 @@ class Payment:
         return super(Payment, self).get_payment_description(name)
 
 
-class AddSalePaymentView:
+class AddSalePaymentView(metaclass=PoolMeta):
     """
     View for adding Sale Payments
     """
@@ -419,7 +445,9 @@ class AddSalePaymentView:
 
     @fields.depends('sale', 'gift_card', 'amount')
     def on_change_gift_card(self):
-        amount_to_pay = self.sale.total_amount - self.sale.payment_total
+        amount_to_pay = Decimal('0.0')
+        if self.sale:
+            amount_to_pay = self.sale.total_amount - self.sale.payment_total
         if self.gift_card:
             if amount_to_pay > self.gift_card.amount_available:
                 self.amount = self.gift_card.amount_available

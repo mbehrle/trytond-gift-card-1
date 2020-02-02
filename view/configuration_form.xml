@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<form string="Configuration">
+<form>
     <label name="liability_account"/>
     <field name="liability_account"/>
     <label name="number_sequence"/>

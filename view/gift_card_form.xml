@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<form string="Gift Card">
+<form>
     <label name="number"/>
     <field name="number"/>
     <label name="amount"/>
@@ -41,8 +41,8 @@
     <label name="state"/>
     <field name="state"/>
     <group col="3" colspan="2" id="buttons">
-        <button name="draft" string="Draft" icon="tryton-go-previous"/>
-        <button name="activate" string="Activate" icon="tryton-go-next"/>
+        <button name="draft" string="Draft" icon="tryton-back"/>
+        <button name="activate" string="Activate" icon="tryton-forward"/>
         <!--Hide button temporary as it may not be needed-->
         <!--<button name="cancel" string="Cancel" icon="tryton-cancel"/>-->
     </group>

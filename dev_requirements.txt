@@ -1,5 +1,7 @@
-# Install packages from requirements.txt
--r requirements.txt
-
+# Install development requirements
+    
+tox
 coverage
 flake8
+
+-r requirements.txt

@@ -1,4 +1,4 @@
 <?xml version="1.0"?>
-<form string="Redemption Complete">
+<form>
 	<field name="done_msg"/>
 </form>

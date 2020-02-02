@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <tryton>
   <data>
-
         <menuitem name="Gift Card" id="gift_card_main_menu" sequence="10"/>
 
         <record model="ir.ui.view" id="configuration_form_view">
@@ -38,22 +37,10 @@
             <field name="group" ref="sale.group_sale_admin"/>
         </record>
 
-        <record model="ir.property" id="property_number_sequence">
-            <field name="field" search="[('model.model', '=', 'gift_card.configuration'), ('name', '=', 'number_sequence')]"/>
-            <field name="value" eval="'ir.sequence,' + str(ref('sequence_number'))"/>
-        </record>
-
-        <record model="ir.property" id="property_gift_card_method">
-            <field name="field"
-                search="[('model.model', '=', 'sale.configuration'), ('name', '=', 'gift_card_method')]" />
-            <field name="value">,invoice</field>
-        </record>
-
         <record model="ir.ui.view" id="sale_configuration_view_form">
             <field name="model">sale.configuration</field>
             <field name="inherit" ref="sale.sale_configuration_view_form"/>
             <field name="name">sale_configuration_form</field>
         </record>
-
     </data>
 </tryton>

@@ -1,4 +1,16 @@
-psycopg2
+# The requirements file is a way to get pip to install specific packages to 
+# make up an environment.
+jinja2
+num2words
 
-# Install this package itself
+blinker
+cachelib
+flask
+flask-wtf
+Flask-Babel
+Flask-Login
+pytz
+git+https://github.com/pallets/secure-cookie
+speaklater
+
 .

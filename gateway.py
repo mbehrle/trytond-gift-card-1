@@ -3,14 +3,11 @@ from trytond.pool import PoolMeta
 from trytond.model import fields, ModelView, Workflow
 from trytond.pyson import Eval
 
-__all__ = [
-    'PaymentGateway', 'PaymentTransaction'
-]
-
-__metaclass__ = PoolMeta
+from trytond.i18n import gettext
+from trytond.exceptions import UserError
 
 
-class PaymentGateway:
+class PaymentGateway(metaclass=PoolMeta):
     "Gift Card Gateway Implementation"
     __name__ = 'payment_gateway.gateway'
 
@@ -22,7 +19,7 @@ class PaymentGateway:
         return rv
 
 
-class PaymentTransaction:
+class PaymentTransaction(metaclass=PoolMeta):
     """
     Implement the authorize and capture methods
     """
@@ -39,13 +36,6 @@ class PaymentTransaction:
     @classmethod
     def __setup__(cls):
         super(PaymentTransaction, cls).__setup__()
-
-        cls._error_messages.update({
-            'insufficient_amount':
-                'Card %s is found to have insufficient amount',
-            'negative_amount': 'The amount to be entered cannot be negative.',
-        })
-
         cls._buttons['authorize']['invisible'] = \
             cls._buttons['authorize']['invisible'] & ~(
                 (Eval('state') == 'draft') &
@@ -70,9 +60,11 @@ class PaymentTransaction:
         if self.amount < 0:
             # TODO:
             # Put this bit in payment_gateway.
-            self.raise_user_error("negative_amount")
+            raise UserError(gettext('gift_card.negative_amount'))
         if available_amount < self.amount:
-            self.raise_user_error("insufficient_amount", self.gift_card.number)
+            raise UserError(
+                gettext('gift_card.insufficient_amount',
+                    self.gift_card.number))
 
     def authorize_self(self):
         """

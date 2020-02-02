@@ -6,6 +6,5 @@
             <field name="inherit" ref="payment_gateway.transaction_view_form"/>
             <field name="name">transaction_form</field>
         </record>
-
     </data>
 </tryton>

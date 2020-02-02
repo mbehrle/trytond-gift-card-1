@@ -1,37 +1,64 @@
 # -*- coding: utf-8 -*-
-from trytond.model import ModelView, ModelSQL, ModelSingleton, fields
+from trytond import backend
+from trytond.model import (ModelView, ModelSQL, ModelSingleton, ValueMixin,
+    fields)
 from trytond.pool import PoolMeta
+from trytond.pyson import Eval
+from trytond.tools.multivalue import migrate_property
+from trytond.modules.company.model import (
+    CompanyMultiValueMixin, CompanyValueMixin)
 
-__all__ = ['Configuration', 'SaleConfiguration']
-__metaclass__ = PoolMeta
+liability_account = fields.Many2One('account.account', 'Liability Account',
+    required=True)
+number_sequence = fields.Many2One('ir.sequence', 'Number Sequence',
+    required=True, domain=[('code', '=', 'gift_card.gift_card')])
 
 
-class Configuration(ModelSingleton, ModelSQL, ModelView):
+class Configuration(
+        ModelSingleton, ModelSQL, ModelView, CompanyMultiValueMixin):
     "Configuration"
     __name__ = 'gift_card.configuration'
 
-    liability_account = fields.Property(
-        fields.Many2One(
-            'account.account', 'Liability Account', required=True,
-        )
-    )
-
-    # This field defines sequnce for the gift card number
-    number_sequence = fields.Property(
-        fields.Many2One(
-            'ir.sequence', 'Number Sequence', required=True,
-            domain=[('code', '=', 'gift_card.gift_card')],
-        )
-    )
+    liability_account = fields.MultiValue(liability_account)
+    number_sequence = fields.MultiValue(number_sequence)
 
 
-class SaleConfiguration:
-    __name__ = 'sale.configuration'
+class _ConfigurationValue(ModelSQL):
 
-    # Gift card creation method
-    gift_card_method = fields.Property(
-        fields.Selection([
-            ('order', 'On Order Processed'),
-            ('invoice', 'On Invoice Paid'),
-        ], 'Gift Card Creation Method', required=True)
-    )
+    _configuration_value_field = None
+
+    @classmethod
+    def __register__(cls, module_name):
+        TableHandler = backend.get('TableHandler')
+        exist = TableHandler.table_exist(cls._table)
+
+        super(_ConfigurationValue, cls).__register__(module_name)
+
+        if not exist:
+            cls._migrate_property([], [], [])
+
+    @classmethod
+    def _migrate_property(cls, field_names, value_names, fields):
+        field_names.append(cls._configuration_value_field)
+        value_names.append(cls._configuration_value_field)
+        migrate_property(
+            'gift_card.configuration', field_names, cls, value_names,
+            fields=fields)
+
+
+class GiftCardConfigurationSequence(_ConfigurationValue, ModelSQL, ValueMixin):
+    'Gift Card Configuration Sequence'
+    __name__ = 'gift_card.configuration.number_sequence'
+    number_sequence = number_sequence
+    _configuration_value_field = 'number_sequence'
+
+    @classmethod
+    def check_xml_record(cls, records, values):
+        return True
+
+
+class GiftCardLiabilityAccount(_ConfigurationValue, ModelSQL, ValueMixin):
+    'Gift Card Liability Account'
+    __name__ = 'gift_card.configuration.liability_account'
+    liability_account = liability_account
+    _configuration_value_field = 'liability_account'

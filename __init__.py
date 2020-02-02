@@ -1,38 +1,38 @@
 # -*- coding: utf-8 -*-
 from trytond.pool import Pool
-from .gift_card import (
-    GiftCard, GiftCardReport, GiftCardRedeemStart, GiftCardRedeemDone,
-    GiftCardRedeemWizard
-)
-from .sale import SaleLine, Sale, AddSalePaymentView, Payment, AddSalePayment
-from .configuration import Configuration, SaleConfiguration
-from .gateway import PaymentGateway, PaymentTransaction
-from .product import Product, GiftCardPrice
+from . import gift_card
+from . import sale
+from . import configuration
+from . import gateway
+from . import product
 
 
 def register():
     Pool.register(
-        Configuration,
-        GiftCard,
-        GiftCardPrice,
-        GiftCardRedeemStart,
-        GiftCardRedeemDone,
-        SaleConfiguration,
-        SaleLine,
-        Sale,
-        AddSalePaymentView,
-        Payment,
-        PaymentGateway,
-        PaymentTransaction,
-        Product,
+        configuration.Configuration,
+        configuration.GiftCardConfigurationSequence,
+        configuration.GiftCardLiabilityAccount,
+        gift_card.GiftCard,
+        gift_card.GiftCardRedeemStart,
+        gift_card.GiftCardRedeemDone,
+        sale.SaleConfiguration,
+        sale.SaleGiftCardMethod,
+        sale.SaleLine,
+        sale.Sale,
+        sale.AddSalePaymentView,
+        sale.Payment,
+        gateway.PaymentGateway,
+        gateway.PaymentTransaction,
+        product.GiftCardPrice,
+        product.Product,
         module='gift_card', type_='model'
-    )
+        )
     Pool.register(
-        GiftCardReport,
+        gift_card.GiftCardReport,
         module='gift_card', type_='report'
-    )
+        )
     Pool.register(
-        GiftCardRedeemWizard,
-        AddSalePayment,
+        gift_card.GiftCardRedeemWizard,
+        sale.AddSalePayment,
         module='gift_card', type_='wizard'
-    )
+        )

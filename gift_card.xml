@@ -104,5 +104,36 @@
             <field name="domain"></field>
             <field name="act_window" ref="act_gift_card"/>
         </record>
+
+        <!-- Buttons -->
+	<record model="ir.model.button" id="gift_card_cancel_button">
+            <field name="name">cancel</field>
+            <field name="string">Cancel</field>
+            <field name="model" search="[('model', '=', 'gift_card.gift_card')]"/>
+        </record>
+        <record model="ir.model.button-res.group" id="gift_card_cancel_button_group_account">
+            <field name="button" ref="gift_card_cancel_button"/>
+            <field name="group" ref="account.group_account"/>
+        </record>
+
+	<record model="ir.model.button" id="gift_card_draft_button">
+            <field name="name">draft</field>
+            <field name="string">Draft</field>
+            <field name="model" search="[('model', '=', 'gift_card.gift_card')]"/>
+        </record>
+        <record model="ir.model.button-res.group" id="gift_card_draft_button_group_account">
+            <field name="button" ref="gift_card_draft_button"/>
+            <field name="group" ref="account.group_account"/>
+        </record>
+
+	<record model="ir.model.button" id="gift_card_activate_button">
+            <field name="name">activate</field>
+            <field name="string">Activate</field>
+            <field name="model" search="[('model', '=', 'gift_card.gift_card')]"/>
+        </record>
+        <record model="ir.model.button-res.group" id="gift_card_activate_button_group_account">
+            <field name="button" ref="gift_card_activate_button"/>
+            <field name="group" ref="account.group_account"/>
+        </record>
     </data>
 </tryton>

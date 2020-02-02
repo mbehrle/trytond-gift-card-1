@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<form string="Gift Card Price">
+<form>
     <label name="price"/>
     <field name="price"/>
 </form>
