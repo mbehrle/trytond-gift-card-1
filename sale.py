@@ -14,9 +14,6 @@ from trytond.modules.company.model import (
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
 
-from nereid.contrib.locale import make_lazy_gettext
-
-_ = make_lazy_gettext('gift_card')
 
 gift_card_method = fields.Selection([
                 ('order', 'On Order Processed'),
@@ -411,10 +408,9 @@ class Payment(metaclass=PoolMeta):
         This can be used in documents to show payment details
         """
         if self.method == 'gift_card':
-            return (
-                str(_('Paid by Gift Certificate')) + ' (' + ('x' * 5) +
-                self.gift_card.number[-3:] + ')'
-            )
+            number = ('x' * 5) + self.gift_card.number[-3:]
+            return gettext('gift_card.gift_card_paid_message',
+                number=number)
         return super(Payment, self).get_payment_description(name)
 
 

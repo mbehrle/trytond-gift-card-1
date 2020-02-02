@@ -39,5 +39,11 @@
         <record model="ir.message" id="missing_liability_account">
             <field name="text">Liability Account is missing from Gift Card Configuration.</field>
 	</record>
+        <record model="ir.message" id="redeem_done_message">
+            <field name="text">The gift card was redeemed with %(amount)s %(code)s captured in this transaction, %(captured)s %(code)s captured overall and %(remaining)s %(cod)s remaining.</field>
+	</record>
+        <record model="ir.message" id="gift_card_paid_message">
+            <field name="text">Paid by Gift Card (%(number)s)</field>
+	</record>
     </data>
 </tryton>

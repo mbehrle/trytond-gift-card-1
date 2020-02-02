@@ -15,11 +15,9 @@ from trytond.i18n import gettext
 from trytond.exceptions import UserError
 
 from trytond.sendmail import sendmail_transactional, SMTPDataManager
-from nereid.contrib.locale import make_lazy_gettext
-
-_ = make_lazy_gettext('gift_card')
 
 _from = config.get('email', 'from', default='no-reply@localhost')
+
 
 class GiftCard(Workflow, ModelSQL, ModelView):
     "Gift Card"
@@ -530,13 +528,13 @@ class GiftCardRedeemWizard(Wizard):
         """
         currency_code = self.start.gift_card.currency.code
         return {
-            'done_msg': _('The gift card was redeemed with {0} {3} captured in '
-                'this transaction, {1} {3} captured overall and {2} {3} '
-                'remaining.').format(
-                self.start.amount, self.start.gift_card.amount_captured,
-                self.start.gift_card.amount_available, currency_code
-            ),
-        }
+            'done_msg': gettext('gift_card.redeem_done_message',
+                amount=self.start.amount,
+                captured=self.start.gift_card.amount_captured,
+                remaining=self.start.gift_card.amount_available,
+                code=currency_code
+                ),
+            }
 
     def check_giftcard_state(self, gift_card):
         """
