@@ -309,9 +309,10 @@ class GiftCard(Workflow, ModelSQL, ModelView):
         subject = self._get_subject_for_email()
         html_template, text_template = self._get_email_templates()
 
+        recipients = [self.recipient_email] + bcc_emails
         email_gift_card = render_email(
             _from,
-            [self.recipient_email] + bcc_emails,
+            recipients,
             subject,
             html_template=html_template,
             text_template=text_template,
@@ -319,21 +320,21 @@ class GiftCard(Workflow, ModelSQL, ModelView):
             card=self,
         )
 
-        self.send_email(email_gift_card)
+        self.send_email(email_gift_card, to_addr=recipients)
         self.is_email_sent = True
         self.save()
 
     # TODO refactor this into common method, also used by
     # trytond_nereid/user.py
-    def send_email(self, message):
+    def send_email(self, message, to_addr=None):
         """
         Generic method to call sendmail_transactional
         """
         datamanager = SMTPDataManager()
         Transaction().join(datamanager)
 
-        if self.email:
-            sendmail_transactional(_from, self.email, message,
+        if to_addr:
+            sendmail_transactional(_from, to_addr, message,
                 datamanager=datamanager)
 
 
