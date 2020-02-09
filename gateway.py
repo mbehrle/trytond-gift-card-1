@@ -15,7 +15,7 @@ class PaymentGateway(metaclass=PoolMeta):
     def get_methods(self):
         rv = super(PaymentGateway, self).get_methods()
         gift_card = ('gift_card', 'Gift Card')
-        if self.provider == 'self' and gift_card not in rv:
+        if self.provider == 'manual' and gift_card not in rv:
             rv.append(gift_card)
         return rv
 
@@ -67,25 +67,25 @@ class PaymentTransaction(metaclass=PoolMeta):
                 gettext('gift_card.insufficient_amount',
                     self.gift_card.number))
 
-    def authorize_self(self):
+    def authorize_manual(self):
         """
         Authorize using gift card for the specific transaction.
         """
         if self.method == 'gift_card':
             self.validate_gift_card_amount(self.gift_card.amount_available)
 
-        return super(PaymentTransaction, self).authorize_self()
+        return super(PaymentTransaction, self).authorize_manual()
 
-    def capture_self(self):
+    def capture_manual(self):
         """
         Capture using gift card for the specific transaction.
         """
         if self.method == 'gift_card':
             self.validate_gift_card_amount(self.gift_card.amount_available)
 
-        return super(PaymentTransaction, self).capture_self()
+        return super(PaymentTransaction, self).capture_manual()
 
-    def settle_self(self):
+    def settle_manual(self):
         """
         Settle using gift card for the specific transaction.
         """
@@ -96,7 +96,7 @@ class PaymentTransaction(metaclass=PoolMeta):
                 self.gift_card.amount - self.gift_card.amount_captured
             self.validate_gift_card_amount(available_amount)
 
-        return super(PaymentTransaction, self).settle_self()
+        return super(PaymentTransaction, self).settle_manual()
 
     @classmethod
     @ModelView.button
