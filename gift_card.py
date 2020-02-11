@@ -254,7 +254,7 @@ class GiftCard(Workflow, ModelSQL, ModelView):
 
         for gift_card in gift_cards:
             if gift_card.state == 'active':
-                cls.raise_user_error("deletion_not_allowed")
+                raise UserError(gettext("gift_card.deletion_not_allowed"))
 
         return super(GiftCard, cls).delete(gift_cards)
 
