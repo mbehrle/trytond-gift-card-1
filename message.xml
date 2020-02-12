@@ -31,7 +31,7 @@
             <field name="text">Gift card amounts can not be negative.</field>
 	</record>
         <record model="ir.message" id="amounts_out_of_range">
-            <field name="text">Gift card amount must be within %s %s and %s %s.</field>
+            <field name="text">Gift card amount must be within %(gc_min)s %(currency_code)s and %(gc_max)s %(currency_code)s.</field>
 	</record>
         <record model="ir.message" id="insufficient_amount_to_pay">
             <field name="text">Gift card %s has no sufficient amount to pay %s %s.</field>

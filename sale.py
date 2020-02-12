@@ -257,10 +257,12 @@ class SaleLine(metaclass=PoolMeta):
         if product.allow_open_amount and not (
             product.gc_min <= self.unit_price <= product.gc_max
         ):
+            from trytond.transaction import Transaction
             raise UserError(
                 gettext('gift_card.amounts_out_of_range',
-                    self.sale.currency.code, product.gc_min,
-                    self.sale.currency.code, product.gc_max))
+                    currency_code=self.sale.currency.code,
+                    gc_min=product.gc_min,
+                    gc_max=product.gc_max))
 
         # XXX: Do not consider cancelled ones in the gift cards.
         # card could have been cancelled for reasons like wrong message ?

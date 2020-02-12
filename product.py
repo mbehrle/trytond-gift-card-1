@@ -9,7 +9,6 @@ from trytond.exceptions import UserError
 
 
 class Product(metaclass=PoolMeta):
-    "Product"
     __name__ = 'product.product'
 
     is_gift_card = fields.Boolean("Is Gift Card ?")
@@ -49,15 +48,15 @@ class Product(metaclass=PoolMeta):
         return False
 
     @classmethod
-    def validate(cls, templates):
+    def validate(cls, products):
         """
-        Validates each product template
+        Validates each product product
         """
-        super(Product, cls).validate(templates)
+        super(Product, cls).validate(products)
 
-        for template in templates:
-            template.check_product_type()
-            template.check_gc_min_max()
+        for product in products:
+            product.check_product_type()
+            product.check_gc_min_max()
 
     def check_gc_min_max(self):
         """
