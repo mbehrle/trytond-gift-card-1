@@ -521,6 +521,7 @@ class GiftCardRedeemWizard(Wizard):
             'credit_account': self.start.party.account_receivable.id,
         }])
         PaymentTransaction.capture([transaction])
+        PaymentTransaction.post([transaction])
 
         return 'done'
 
