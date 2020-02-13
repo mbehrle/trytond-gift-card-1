@@ -121,7 +121,7 @@ class GiftCard(Workflow, ModelSQL, ModelView):
 
     def get_amount(self, name):
         """
-        Returns authorzied, captured and available amount for the gift card
+        Returns authorized, captured and available amount for the gift card
         """
         PaymentTransaction = Pool().get('payment_gateway.transaction')
 
@@ -133,14 +133,15 @@ class GiftCard(Workflow, ModelSQL, ModelView):
 
         if name == 'amount_captured':
             return sum([t.amount for t in PaymentTransaction.search([
-                ('state', 'in', ['posted', 'done']),
+                ('state', 'in', ['completed', 'posted', 'done']),
                 ('gift_card', '=', self.id)
             ])])
 
         if name == 'amount_available':
             return self.amount - sum([
                 t.amount for t in PaymentTransaction.search([
-                    ('state', 'in', ['authorized', 'posted', 'done']),
+                    ('state', 'in', ['authorized', 'completed','posted',
+                                    'done']),
                     ('gift_card', '=', self.id)
                 ])
             ])
