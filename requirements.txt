@@ -6,11 +6,14 @@ num2words
 blinker
 cachelib
 flask
+# Remove the version constraint once secure-cookie is released
+# https://github.com/pallets/secure-cookie/issues/1
+werkzeug <1.0.0
+git+https://github.com/pallets/secure-cookie
 flask-wtf
 Flask-Babel
 Flask-Login
 pytz
-git+https://github.com/pallets/secure-cookie
 speaklater
 
 .
