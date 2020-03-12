@@ -129,6 +129,12 @@ def create_product(type='service', mode='physical', is_gift_card=False,
                                         }])
                             ]
                         })
+            else:
+                product_values.update({
+                    'allow_open_amount': True,
+                    'gc_min': 100,
+                    'gc_max': 400
+                })
         values.update({
                 'products': [
                     ('create', [product_values])
