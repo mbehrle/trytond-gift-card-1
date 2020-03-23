@@ -7,6 +7,8 @@ from . import configuration
 from . import gateway
 from . import product
 
+__all__ = ['register']
+
 
 def register():
     Pool.register(
