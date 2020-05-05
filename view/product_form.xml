@@ -4,7 +4,7 @@
 <data>
     <xpath expr="/form/field[@name='active']" position="after">
           <label name="is_gift_card" />
-          <field name="is_gift_card" />
+          <field name="is_gift_card" xexpand="0" width="100"/>
     </xpath>
     <xpath expr="/form/notebook" position="inside">
         <page id="gift_card_details" string="Gift Card">
