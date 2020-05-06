@@ -11,6 +11,7 @@ flask
 werkzeug <1.0.0
 git+https://github.com/pallets/secure-cookie
 flask-wtf
+email_validator
 Flask-Babel
 Flask-Login
 pytz
