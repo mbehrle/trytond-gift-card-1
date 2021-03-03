@@ -105,8 +105,13 @@ class GiftCard(Workflow, ModelSQL, ModelView):
 
     def get_sale(self, name):
         """
-        Return sale for gift card using sale line associated with it
+        Return sale for gift card using the origin and as fallback the
+        sale line associated with it
         """
+        Sale = Pool().get('sale.sale')
+
+        if isinstance(self.origin, Sale):
+            return self.origin.id
         return self.sale_line and self.sale_line.sale.id or None
 
     @staticmethod
