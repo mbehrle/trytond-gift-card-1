@@ -495,7 +495,7 @@ msgid ""
 msgstr ""
 "Der Gutschein wurde eingelöst mit %(amount)s %(code)s eingezogen in dieser "
 "Transaktion, %(captured)s %(code)s eingezogen gesamt und %(remaining)s "
-"%(cod)s Restbetrag verbleibend."
+"%(code)s Restbetrag verbleibend."
 
 msgctxt "model:ir.model.button,string:gift_card_activate_button"
 msgid "Activate"

@@ -535,14 +535,13 @@ class GiftCardRedeemWizard(Wizard):
         Returns a message with relevant details.
         """
         currency_code = self.start.gift_card.currency.code
-        return {
-            'done_msg': gettext('gift_card.redeem_done_message',
-                amount=self.start.amount,
-                captured=self.start.gift_card.amount_captured,
-                remaining=self.start.gift_card.amount_available,
-                code=currency_code
-                ),
-            }
+        done_msg = gettext('gift_card.redeem_done_message',
+            amount=self.start.amount,
+            captured=self.start.gift_card.amount_captured,
+            remaining=self.start.gift_card.amount_available,
+            code=currency_code)
+        print(done_msg)
+        return {'done_msg': done_msg}
 
     def check_giftcard_state(self, gift_card):
         """
