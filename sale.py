@@ -102,7 +102,7 @@ class SaleLine(metaclass=PoolMeta):
         }, depends=['is_gift_card']
     )
     allow_open_amount = fields.Function(
-        fields.Boolean("Allow Open Amount?", states={
+        fields.Boolean("Allow Open Amount", states={
             'invisible': ~Bool(Eval('is_gift_card'))
         }, depends=['is_gift_card']), 'get_allow_open_amount'
     )

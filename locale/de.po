@@ -231,8 +231,8 @@ msgid "Gift Card"
 msgstr "Gutschein"
 
 msgctxt "field:product.product,allow_open_amount:"
-msgid "Allow Open Amount ?"
-msgstr "Offener Betrag erlaubt?"
+msgid "Allow Open Amount"
+msgstr "Offener Betrag erlaubt"
 
 msgctxt "field:product.product,gc_max:"
 msgid "Gift Card Maximum Amount"
