@@ -464,7 +464,7 @@ class AddSalePayment(Wizard):
 
     def create_sale_payment(self, profile=None):
         """
-        Helper function to create new payment
+        Helper function to create a new payment or update an existing payment
         """
         sale_payment = super(AddSalePayment, self).create_sale_payment(
             profile=profile
@@ -475,5 +475,6 @@ class AddSalePayment(Wizard):
         # module/model for example).
         sale_payment.gift_card = (self.payment_info.method == 'gift_card')  \
             and self.payment_info.gift_card or None
+        sale_payment.save()
 
         return sale_payment
