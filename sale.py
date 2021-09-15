@@ -456,10 +456,7 @@ class AddSalePaymentView(metaclass=PoolMeta):
             self.amount = amount_to_pay
 
 
-class AddSalePayment(Wizard):
-    """
-    Wizard to add a Sale Payment
-    """
+class AddSalePayment(metaclass=PoolMeta):
     __name__ = 'sale.payment.add'
 
     def create_sale_payment(self, profile=None):
