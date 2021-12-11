@@ -1,19 +1,17 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from decimal import Decimal
+
 from trytond import backend
-from trytond.model import (ModelView, ModelSQL, ValueMixin,
-    fields)
-from trytond.pool import PoolMeta, Pool
-from trytond.pyson import Eval, Bool, Get
-from trytond.wizard import Wizard
-from trytond.tools.multivalue import migrate_property
+from trytond.exceptions import UserError
+from trytond.i18n import gettext
+from trytond.model import ModelSQL, ModelView, ValueMixin, fields
 from trytond.modules.company.model import (
     CompanyMultiValueMixin, CompanyValueMixin)
-
-from trytond.i18n import gettext
-from trytond.exceptions import UserError
-
+from trytond.pool import Pool, PoolMeta
+from trytond.pyson import Bool, Eval, Get
+from trytond.tools.multivalue import migrate_property
+from trytond.wizard import Wizard
 
 gift_card_method = fields.Selection([
                 ('order', 'On Order Processed'),

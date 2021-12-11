@@ -1,11 +1,10 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
-from trytond.model import fields, ModelSQL, ModelView
-from trytond.pool import PoolMeta
-from trytond.pyson import Eval, Bool
-
-from trytond.i18n import gettext
 from trytond.exceptions import UserError
+from trytond.i18n import gettext
+from trytond.model import ModelSQL, ModelView, fields
+from trytond.pool import PoolMeta
+from trytond.pyson import Bool, Eval
 
 
 class Product(metaclass=PoolMeta):

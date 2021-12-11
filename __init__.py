@@ -1,11 +1,8 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from trytond.pool import Pool
-from . import gift_card
-from . import sale
-from . import configuration
-from . import gateway
-from . import product
+
+from . import configuration, gateway, gift_card, product, sale
 
 __all__ = ['register']
 

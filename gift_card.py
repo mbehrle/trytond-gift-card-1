@@ -1,20 +1,18 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
-from num2words import num2words
-
-from trytond.model import ModelSQL, ModelView, Workflow, fields, Unique
-from trytond.pyson import Eval, If
-from trytond.wizard import Wizard, Button, StateView, StateTransition
-from trytond.pool import Pool
-from trytond.transaction import Transaction
-from trytond.report import Report
-from trytond.config import config
 from jinja2 import Environment, PackageLoader
 from nereid import render_email
-from trytond.i18n import gettext
+from num2words import num2words
+from trytond.config import config
 from trytond.exceptions import UserError
-
-from trytond.sendmail import sendmail_transactional, SMTPDataManager
+from trytond.i18n import gettext
+from trytond.model import ModelSQL, ModelView, Unique, Workflow, fields
+from trytond.pool import Pool
+from trytond.pyson import Eval, If
+from trytond.report import Report
+from trytond.sendmail import SMTPDataManager, sendmail_transactional
+from trytond.transaction import Transaction
+from trytond.wizard import Button, StateTransition, StateView, Wizard
 
 _from = config.get('email', 'from', default='no-reply@localhost')
 

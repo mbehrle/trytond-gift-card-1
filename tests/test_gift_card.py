@@ -1,27 +1,24 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 import unittest
-
 from decimal import Decimal
 from unittest.mock import patch
 
-from trytond.tests.test_tryton import ModuleTestCase, with_transaction
-from trytond.tests.test_tryton import suite as test_suite
-from trytond.transaction import Transaction
-from trytond.pool import Pool
 from trytond.config import config
 from trytond.exceptions import UserError
-
 from trytond.modules.company.tests import set_company
-from trytond.modules.currency.tests import (create_currency,
-    add_currency_rate)
-from trytond.modules.payment_gateway.tests import (create_payment_gateway,
-    create_payment_profile)
-from trytond.modules.invoice_payment_gateway.tests import (create_payment_term,
-    create_write_off)
-from trytond.modules.sale_payment_gateway.tests import create_sale
-
+from trytond.modules.currency.tests import add_currency_rate, create_currency
 from trytond.modules.gift_card import gift_card as gift_card_module
+from trytond.modules.invoice_payment_gateway.tests import (
+    create_payment_term, create_write_off)
+from trytond.modules.payment_gateway.tests import (
+    create_payment_gateway, create_payment_profile)
+from trytond.modules.sale_payment_gateway.tests import create_sale
+from trytond.pool import Pool
+from trytond.tests.test_tryton import ModuleTestCase
+from trytond.tests.test_tryton import suite as test_suite
+from trytond.tests.test_tryton import with_transaction
+from trytond.transaction import Transaction
 
 
 def create_gift_card(set_configuration_account=True):

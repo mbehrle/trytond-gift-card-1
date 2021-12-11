@@ -1,13 +1,13 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from trytond import backend
-from trytond.model import (ModelView, ModelSQL, ModelSingleton, ValueMixin,
-    fields)
+from trytond.model import (
+    ModelSingleton, ModelSQL, ModelView, ValueMixin, fields)
+from trytond.modules.company.model import (
+    CompanyMultiValueMixin, CompanyValueMixin)
 from trytond.pool import PoolMeta
 from trytond.pyson import Eval
 from trytond.tools.multivalue import migrate_property
-from trytond.modules.company.model import (
-    CompanyMultiValueMixin, CompanyValueMixin)
 
 liability_account = fields.Many2One('account.account', 'Liability Account',
     required=True)

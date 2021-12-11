@@ -1,11 +1,10 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
-from trytond.pool import PoolMeta
-from trytond.model import fields, ModelView, Workflow
-from trytond.pyson import Eval
-
-from trytond.i18n import gettext
 from trytond.exceptions import UserError
+from trytond.i18n import gettext
+from trytond.model import ModelView, Workflow, fields
+from trytond.pool import PoolMeta
+from trytond.pyson import Eval
 
 
 class PaymentGateway(metaclass=PoolMeta):
